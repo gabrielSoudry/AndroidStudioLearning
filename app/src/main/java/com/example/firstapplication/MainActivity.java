@@ -5,13 +5,17 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
+import com.mongodb.lang.NonNull;
 import com.mongodb.stitch.android.core.Stitch;
 import com.mongodb.stitch.android.core.StitchAppClient;
 import com.mongodb.stitch.android.core.auth.StitchUser;
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient;
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoCollection;
 import com.mongodb.stitch.core.auth.providers.anonymous.AnonymousCredential;
+import com.mongodb.stitch.core.services.mongodb.remote.RemoteUpdateOptions;
+import com.mongodb.stitch.core.services.mongodb.remote.RemoteUpdateResult;
 
 import org.bson.Document;
 
@@ -36,13 +40,30 @@ public class MainActivity extends AppCompatActivity {
         Log.d("============", "onCreate:"+coll.count());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Task<StitchUser> stitchUserTask = client.getAuth().loginWithCredential(new AnonymousCredential());
-        if(stitchUserTask.isSuccessful()) {
-            Log.e("===============STITCH", "Login Sucessfull ");
-        }
-        else {
-            Log.e("===============STITCH", "Login :'( !");
-        }
+
+
+        client.getAuth().loginWithCredential(new AnonymousCredential()).continueWithTask(
+                new Continuation<StitchUser, Task<RemoteUpdateResult>>() {
+
+                    @Override
+                    public Task<RemoteUpdateResult> then(@NonNull Task<StitchUser> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            Log.e("STITCH", "Login failed!");
+                            throw task.getException();
+                        }
+
+                        final Document updateDoc = new Document(
+                                "owner_id",
+                                task.getResult().getId()
+                        );
+
+                        updateDoc.put("number", 42);
+                        return coll.updateOne(
+                                null, updateDoc, new RemoteUpdateOptions().upsert(true)
+                        );
+                    }
+                });
+
     }
 
 
