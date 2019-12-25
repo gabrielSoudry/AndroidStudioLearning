@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FirstApplication</string>
+<!--    <string name="stitch_client_app_id">androidapp-lfjxs</string> -->
+
 </resources>
