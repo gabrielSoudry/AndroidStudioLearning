@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/diego_ph"
+    >
 
     <EditText
         android:id="@+id/editText"
@@ -44,13 +46,25 @@
 
     <Button
         android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="173dp"
         android:layout_height="53dp"
         android:layout_marginStart="120dp"
         android:layout_marginEnd="119dp"
-        android:layout_marginBottom="265dp"
+        android:layout_marginBottom="224dp"
         android:text="@string/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Login " />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MongoStitch ©️"
+        tools:layout_editor_absoluteX="312dp"
+        tools:layout_editor_absoluteY="707dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

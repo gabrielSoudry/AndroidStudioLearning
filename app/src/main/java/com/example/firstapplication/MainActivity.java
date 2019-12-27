@@ -2,6 +2,9 @@ package com.example.firstapplication;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +25,9 @@ import org.bson.Document;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button playButton;
+    private EditText usernameText;
+    private EditText passwordText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("============", "onCreate:"+coll.count());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+       // playButton =  findViewById(R.id.button);
+        //usernameText =  findViewById(R.id.editText);
+        //passwordText =  findViewById(R.id.editText2);
+        //playButton.setEnabled(true);
 
         client.getAuth().loginWithCredential(new AnonymousCredential()).continueWithTask(
                 new Continuation<StitchUser, Task<RemoteUpdateResult>>() {
